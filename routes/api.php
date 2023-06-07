@@ -9,6 +9,7 @@ use App\Http\Controllers\videoController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\All_UserController;
 use App\Http\Controllers\TelegramController;
+use App\Http\Controllers\ChatAdviceController;
 use App\Http\Controllers\RecommendationController;
 
 
@@ -50,13 +51,18 @@ Route::group([
 Route::resource('video', videoController::class);
 Route::resource('posts', PostController::class);
 Route::apiResource('plan', PlanController::class);
-Route::apiResource('Recommendation', RecommendationController::class);
-Route::resource('archive',ArchiveController::class);
+
+        Route::apiResource('Recommendation', RecommendationController::class);
+        Route::resource('archive',ArchiveController::class);
 
     Route::apiResource('User', All_UserController::class);
     Route::get('get_user/{id}', [All_UserController::class,'get_user'])->name('get_user');
     Route::get('search/{id}', [All_UserController::class,'serach'])->name('serach');
     Route::get('get_all_subscrib/{id}', [All_UserController::class,'get_all_subscrib']);
 
-Route::resource('telegrem',TelegramController::class);
+Route::resource('telegram',TelegramController::class);
+
+    // Chat Advice
+   Route::get('ChatAdvice',[ChatAdviceController::class,'getChat']);
+   Route::post('ChatAdvice_store',[ChatAdviceController::class,'store']);
 

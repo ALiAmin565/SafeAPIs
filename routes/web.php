@@ -22,7 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('telegrem',[RecommendationController::class,'update_telgrame']);
+// Route::get('telegrem',[RecommendationController::class,'update_telgrame']);
+// Route::get('/',[RecommendationController::class,'update_telgrame']);
 
 
 // Route::get('app',function(){

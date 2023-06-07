@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-
-        Schema::table('recomondations', function (Blueprint $table) {
-            $table->dropColumn('plans');
-
+        Schema::create('plan_telgram_group', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('planes_id');
-
+            $table->unsignedBigInteger('telgram_groups_id');
             $table->foreign('planes_id')->references('id')->on('planes');
-
-
+            $table->foreign('telgram_groups_id')->references('id')->on('telgram_groups');
+            $table->timestamps();
         });
     }
 
@@ -32,12 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('recomondations', function (Blueprint $table) {
-
-            $table->dropColumn('planes_id');
-
-
-        });
-
+        Schema::dropIfExists('plan_telgram_group');
     }
 };

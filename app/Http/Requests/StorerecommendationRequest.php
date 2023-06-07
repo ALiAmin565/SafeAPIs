@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
 use Illuminate\Contracts\Validation\Validator;
 class StorerecommendationRequest extends FormRequest
 {
@@ -27,14 +26,13 @@ class StorerecommendationRequest extends FormRequest
     {
 
         return [
-            'title'=>'required|max:255',
-             'desc'=>'required',
+
+            'title'=>'max:255',
+            'currency'=>'required|max:255',
+            'entry_price'=>"required|max:255",
+            'stop_price'=>"required|max:255",
             'user_id'=>'required|exists:users,id',
             'planes_id'=>'required|exists:planes,id',
-
-
-
-
         ];
     }
 
