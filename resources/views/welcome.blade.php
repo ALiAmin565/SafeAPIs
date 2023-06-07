@@ -12,17 +12,52 @@
 <body>
 
 
+    <div id="resultDiv">
+        {{-- @foreach ($collection as $item)
+           <h6> {{ $item->massage }}</h6>
+         @endforeach --}}
+    </div>
+
+
+
+
+
+
+
+
+
+
 
   <script type="module" >
+var resultDiv = document.getElementById("resultDiv");
+
+
+
     window.Echo.channel('recommendation')
     .listen('.recommendation',(e)=>{
-       console.log(e);
+       console.log(e.welcome.original.id);
     });
+
+//chat
+
+    window.Echo.channel('ChatPlan')
+    .listen('.ChatPlan',(e)=>{
+console.log(e);
+        var result = e.Massage.original.massage.massage; // Extract the desired result from the received data
+        var resultText = document.createTextNode(result);
+
+        var resultDiv = document.getElementById("resultDiv");
+       resultDiv.appendChild(resultText);
+    });
+
+
+
+
   </script>
 
 
 
-<img src="{{ asset('Recommendation/1684590261.jpg') }}" alt="">
+{{-- <img src="{{ asset('Recommendation/1684590261.jpg') }}" alt=""> --}}
 
 
 </body>

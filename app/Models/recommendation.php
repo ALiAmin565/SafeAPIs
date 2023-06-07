@@ -10,17 +10,19 @@ class recommendation extends Model
     use HasFactory;
 
     public $table='recomondations';
+
     protected $fillable=[
         'title',
-        'planes_id',
-        'desc',
-        'archive',
-        'start_archive',
+        'entry_price',
+        'stop_price',
+        'currency',
         'img',
-        'user_id',
-        'number_of_recived',
+        'archive',
+        'active',
         'number_show',
-        'active'
+        'user_id',
+        'planes_id',
+
     ];
 
 
@@ -41,6 +43,11 @@ class recommendation extends Model
         return $this->hasMany(Archive::class);
     }
 
+     public function target()
+     {
+        return $this->hasMany(tagert::class,'recomondations_id','id');
+        // return $this->hasMany(tagert::class,'target','recomondations_id');
+     }
 
 
 }

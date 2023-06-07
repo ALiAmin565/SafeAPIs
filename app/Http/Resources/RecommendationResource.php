@@ -27,8 +27,7 @@ class RecommendationResource extends JsonResource
             'number_of_recived'=>$this->number_of_recived,
             'number_show'=>$this->number_show,
             'active'=>$this->active,
-
-
+            'user'=>UserResource::make($this->whenLoaded('user'))
 
         ];
     }

@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('_recommindation_target', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('recomondations_id');
+            $table->foreign('recomondations_id')->references('id')->on('recomondations');
+            $table->string('target');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('_recommindation_target');
     }
 };

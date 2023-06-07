@@ -18,10 +18,8 @@ return new class extends Migration
             $table->text('desc');
             $table->boolean('discount');
             $table->integer('price');
-            $table->string('currency');
             $table->string('percentage');
-
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

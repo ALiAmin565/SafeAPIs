@@ -18,7 +18,7 @@ class TelegremRsource extends JsonResource
             'id'=>$this->id,
             'merchant'=>$this->merchant,
             'token'=>$this->token,
-            'plan_id'=>$this->plan_id,
+            'title'=>$this->title,
         ];
     }
 }

@@ -26,22 +26,21 @@ class StoreplanRequest extends FormRequest
      */
     public function rules()
     {
-       
+
         return [
-            'title'=>'required',
-            'name'=>'required',
+            'title'=>'required |max:255',
+            'name'=>'required |max:255',
             'desc'=>'required',
             'discount'=>'required|in:0,1',
-            'price'=>'required|integer',
-            'currency'=>'required',
-            'percentage'=>'required|string',
-            'number_point'=>'required|integer',
+            'price'=>'required|integer |max:255',
+            'percentage'=>'required|max:255',
+
 
 
         ];
     }
 
-    
+
     public function failedValidation(Validator $validator)
 
     {

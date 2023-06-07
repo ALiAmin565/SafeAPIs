@@ -21,3 +21,7 @@ Broadcast::channel('recommendation', function () {
     return true;
 });
 
+
+Broadcast::channel('ChatPlan', function () {
+    return true;
+});

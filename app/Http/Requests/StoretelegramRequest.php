@@ -26,9 +26,9 @@ class StoretelegramRequest extends FormRequest
     public function rules()
     {
         return [
-            'merchant'=>'required',
-            'token'=>'required',
-            'plan_id'=>'required|exists:planes,id'
+            'merchant'=>'required|mix:255',
+            'token'=>'required|mix:255',
+            'title'=>'required|mix:255'
         ];
     }
 

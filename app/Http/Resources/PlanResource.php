@@ -21,10 +21,8 @@ class PlanResource extends JsonResource
             'desc'=>$this->desc,
             'discount'=>$this->discount,
             'price'=>$this->price,
-            'currency'=>$this->currency,
             'percentage'=>$this->percentage,
-            'number_point'=>$this->number_point,
-
+            'telegram_groups' => TelegremRsource::collection($this->whenLoaded('telegram')),
 
         ];
     }

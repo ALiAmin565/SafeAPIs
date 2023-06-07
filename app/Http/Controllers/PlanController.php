@@ -13,8 +13,7 @@ class PlanController extends Controller
 
     public function index()
     {
-
-        return PlanResource::collection(plan::all());
+        return PlanResource::collection(plan::with('telegram')->get());
     }
 
 
@@ -23,18 +22,28 @@ class PlanController extends Controller
 
     public function store(StoreplanRequest $request)
     {
-        return new PlanResource(plan::create($request->all()));
+
+        $plan=plan::create($request->all());
+
+        if ($request->has('telegram_id'))
+        {
+            $plan->telegram()->attach($request['telegram_id']);
+        }
+
+        return response()->json(['message' => 'Plan created successfully'], 201);
+
+
     }
 
 
 
     public function show($id)
     {
-        $request = plan::find($id);
+        $request = plan::with('telegram')->find($id);
 
         if (!$request) {
             return response()->json(['message' => 'Request not found'], 404);
-        }
+          }
         return PlanResource::make($request);
 
     }
@@ -43,16 +52,24 @@ class PlanController extends Controller
     public function update(StoreplanRequest $request,$id)
     {
 
-        $requestss = plan::find($id);
-
+        $requestss = plan::with('telegram')->find($id);
 
         if (!$requestss) {
             return response()->json(['message' => 'Request not found'], 404);
         }
+        if ($request->has('telegram_id'))
+        {
 
+            $requestss->telegram()->sync($request['telegram_id']);
 
-        $requestss->update($request->all());
-        return PlanResource::make($request);
+        }
+
+           $requestss->update($request->all());
+
+        return response()->json([
+            'Massage'=>"Updated Success",
+
+        ]);
     }
 
 
@@ -60,13 +77,15 @@ class PlanController extends Controller
     {
 
         $request = plan::find($id);
+        $request->telegram()->detach();
 
-        if (!$request) {
+        if (!$request)
+        {
             return response()->json(['message' => 'Request not found'], 404);
         }
         $request->delete();
 
-        return PlanResource::make($request);
+        return response()->json(['message' => 'Rquest is delete']);
 
     }
 }

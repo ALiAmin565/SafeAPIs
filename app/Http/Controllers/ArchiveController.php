@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archive;
+
+
+use App\Http\Resources\ArchiveResource;
 use App\Http\Requests\StoreArchiveRequest;
 use App\Http\Requests\UpdateArchiveRequest;
 
@@ -15,8 +18,10 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        $archive = Archive::with(['recommendation:id,img,title', 'user:id,email'])->orderBy('created_at', 'desc')->get();
-        return response()->json($archive);
+        //  $archive = Archive::with('recommendation','user')->get();
+        // return PlanResource::collection(plan::with('telegram')->get());
+        // return Archive::with('user')->get();
+        return   ArchiveResource::collection(Archive::with('user')->get());
     }
 
 
