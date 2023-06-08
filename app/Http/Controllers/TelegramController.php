@@ -17,7 +17,7 @@ class TelegramController extends Controller
     public function index()
     {
 
-       return TelegremRsource::collection(telegram::get());
+       return TelegremRsource::collection(telegram::with('plan')->get());
     }
 
 

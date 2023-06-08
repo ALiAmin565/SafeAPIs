@@ -20,8 +20,7 @@ class RecommendationController extends Controller
     public function index()
     {
         return RecommendationResource::collection(recommendation::with(['user','target'])->get());
-        // $recommendation = RecommendationResource::with(['user'])->orderBy('created_at', 'desc')->get();
-        // return response()->json($recommendation);
+
     }
 
 
@@ -35,19 +34,27 @@ class RecommendationController extends Controller
 
         $test = recommendation::create($request->all());
 
-        if (!empty($targets)) {
+                if (!empty($targets)) {
 
-            foreach ($targets as $target) {
-                $tt = tagert::create([
-                    'recomondations_id' => $test['id'],
-                    "target" => $target,
-                ]);
-            }
-        }
+                    foreach ($targets as $target) {
+                        $tt = tagert::create([
+                            'recomondations_id' => $test['id'],
+                            "target" => $target,
+                        ]);
+                    }
+                }
 
-        event(new recommend($test->$tt));
+
+        event(new recommend( response()->json([
+            'test' => $test,
+            'targets' => $targets
+        ])));
         $this->telgrame($request->planes_id);
-        return response()->json($test);
+
+        return response()->json([
+            'test' => $test,
+            'targets' => $targets
+        ]);
 
 
     }
@@ -56,23 +63,21 @@ class RecommendationController extends Controller
     public function show($id)
     {
 
-        $user = recommendation::with(['user' => function ($query) {
-            $query->select('id', 'name');
-        },'target'])->find($id);
+        $user = recommendation::find($id);
 
         if (!$user) {
             return response()->json(['message' => 'request not found'], 404);
         }
-        return response()->json($user);
+        return RecommendationResource::make(recommendation::with(['user','target'])->find($id));
     }
 
 
     public function update($id,StorerecommendationRequest $request)
     {
 
-         $this->show($id);
-         $this->destroy($id);
-         return $this->store($request);
+        $this->show($id);
+        $this->destroy($id);
+        return $this->store($request);
     }
 
 
@@ -80,12 +85,9 @@ class RecommendationController extends Controller
     {
 
         $user = recommendation::find($id);
-
         if (!$user) {
             return response()->json(['message' => 'Recommendation not found'], 404);
         }
-
-
         $target=tagert::where('recomondations_id',$id)->get();
         $target->each->delete();
         $user->delete();
@@ -161,26 +163,26 @@ class RecommendationController extends Controller
 
     }
 
-    public function archive($id,Request $request)
-    {
-         $rec=recommendation::find($id);
-         if (!$rec) {
-            return response()->json(['message' => 'request not found'], 404);
-        }
-         $rec->update([
-            'archive'=>1,
-         ]);
+    // public function archive($id,Request $request)
+    // {
+    //      $rec=recommendation::find($id);
+    //      if (!$rec) {
+    //         return response()->json(['message' => 'request not found'], 404);
+    //     }
+    //      $rec->update([
+    //         'archive'=>1,
+    //      ]);
 
-        //  return response()->json(['message' => 'The archive has been converted successfully'], 404);
+    //     //  return response()->json(['message' => 'The archive has been converted successfully'], 404);
 
 
-         $archive=Archive::create([
-             'recomondation_id'=>$id,
-             "desc"=>$request->desc,
-             "user_id"=>$request->user_id,
+    //      $archive=Archive::create([
+    //          'recomondation_id'=>$id,
+    //          "desc"=>$request->desc,
+    //          "user_id"=>$request->user_id,
 
-            ]);
+    //         ]);
 
-            return $archive;
-        }
+    //         return $archive;
+    //     }
         }

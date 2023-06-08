@@ -3,32 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archive;
-
-
+use App\Models\recommendation;
 use App\Http\Resources\ArchiveResource;
 use App\Http\Requests\StoreArchiveRequest;
 use App\Http\Requests\UpdateArchiveRequest;
 
 class ArchiveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //  $archive = Archive::with('recommendation','user')->get();
-        // return PlanResource::collection(plan::with('telegram')->get());
-        // return Archive::with('user')->get();
+
         return   ArchiveResource::collection(Archive::with('user')->get());
     }
 
 
     public function store(StoreArchiveRequest $request)
     {
-        return response()->json(Archive::create($request->all()));
-    }
+
+
+
+        $rec=recommendation::where('id',$request['recomondation_id'])->first();
+
+
+
+        if (!$rec) {
+           return response()->json(['message' => 'request not found'], 404);
+       }
+        $rec->update([
+           'archive'=>1,
+        ]);
+
+
+
+        $archive=Archive::create([
+            'recomondation_id'=>$request['recomondation_id'],
+            "desc"=>$request->desc,
+            "user_id"=>$request->user_id,
+
+           ]);
+           return response()->json(['message' => 'The conversion was completed successfully']);
+
+       }
+
+
+
+
+        // return response()->json(Archive::create($request->all()));
+
 
 
     public function show($id)

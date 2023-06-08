@@ -46,7 +46,7 @@ class recommendation extends Model
      public function target()
      {
         return $this->hasMany(tagert::class,'recomondations_id','id');
-        // return $this->hasMany(tagert::class,'target','recomondations_id');
+
      }
 
 
