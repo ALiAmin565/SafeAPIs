@@ -18,9 +18,9 @@ class ArchiveResource extends JsonResource
         return [
             'id'=>$this->id,
             'desc'=>$this->desc,
-            'telegram_groups' => UserResource::make($this->whenLoaded('user')),
-            'telegram_groups' => RecommendationResource::collection($this->whenLoaded('recommendation')),
-            // 'user'=>UserResource::collection($this->whenLoaded('user'))
+        //  'recommendtion' => UserResource::make($this->whenLoaded('user')),
+            // 'telegram_groups' => RecommendationResource::collection($this->whenLoaded('recommendation')),
+            'user'=>UserNameResource::make($this->whenLoaded('user'))
 
         ];
     }

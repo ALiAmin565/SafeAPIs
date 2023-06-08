@@ -18,16 +18,16 @@ class RecommendationResource extends JsonResource
         [
             'id'=>$this->id,
             'title'=>$this->title,
-            'plans'=>$this->plans,
-            'desc'=>$this->desc,
-            'archive'=>$this->archive,
-            'start_archive'=>$this->start_archive,
+            'currency'=>$this->currency,
+            'entry_price'=>$this->entry_price,
+            'stop_price'=>$this->stop_price,
             'img'=>$this->img,
-            'user_id'=>$this->user_id,
-            'number_of_recived'=>$this->number_of_recived,
-            'number_show'=>$this->number_show,
             'active'=>$this->active,
-            'user'=>UserResource::make($this->whenLoaded('user'))
+            'img'=>$this->img,
+            'number_show'=>$this->number_show,
+            'planes_id '=>$this->planes_id ,
+            'user'=>UserNameResource::make(($this->whenLoaded('user'))),
+            'target'=>Recommindation_targetResource::collection($this->whenLoaded('target')),
 
         ];
     }

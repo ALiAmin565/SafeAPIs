@@ -35,7 +35,7 @@ var resultDiv = document.getElementById("resultDiv");
 
     window.Echo.channel('recommendation')
     .listen('.recommendation',(e)=>{
-       console.log(e.welcome.original.id);
+       console.log(e);
     });
 
 //chat
