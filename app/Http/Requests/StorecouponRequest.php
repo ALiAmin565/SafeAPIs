@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class StorerecommendationRequest extends FormRequest
+class StorecouponRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,12 +28,12 @@ class StorerecommendationRequest extends FormRequest
 
         return [
 
-            'title' => 'max:255',
-            'currency' => 'required|max:255',
-            'entry_price' => "required|max:255",
-            'stop_price' => "required|max:255",
+            'active' => 'required|max:255',
+            'limit' => 'required|integer',
+            'used' => 'required|integer',
+            'code' => 'required|max:255',
             'user_id' => 'required|exists:users,id',
-            'planes_id' => 'required|exists:planes,id',
+            'plan_id' => 'required|exists:planes,id',
         ];
     }
 

@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('plan_id')->unsigned();
-            $table->string('token_payment');
             $table->string('image_payment')->nullable();
             $table->string('status');
-            $table->string('type');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('plan_id')->references('id')->on('planes');
             $table->timestamps();
