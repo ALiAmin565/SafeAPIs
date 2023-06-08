@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('limit');
             $table->integer('used');
             $table->string('code');
-            $table->boolean('type');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('plan_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
