@@ -71,6 +71,7 @@ Route::post('ChatAdvice_store', [ChatAdviceController::class, 'store']);
 
 Route::apiResource('coupons', CouponController::class);
 Route::apiResource('payment', PaymentController::class);
+Route::apiResource('post', PostController::class);
 
 
 
