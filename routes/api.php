@@ -1,17 +1,20 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\videoController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\All_UserController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\ChatAdviceController;
-use App\Http\Controllers\CouponController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\RecommendationController;
 
 /*
@@ -70,3 +73,26 @@ Route::apiResource('coupons', CouponController::class);
 Route::apiResource('payment', PaymentController::class);
 
 
+
+// for pending
+
+Route::get('pending',[PayController::class,'pending']);
+
+
+
+
+
+//  for Front
+
+
+
+
+
+
+
+
+Route::prefix('Front')->group(function () {
+
+    Route::get('/', [FrontController::class, 'getPlan']);
+    Route::post('SelectPlan', [FrontController::class, 'SelectPlan']);
+});

@@ -32,4 +32,8 @@ class plan extends Model
     {
         return $this->belongsToMany(telegram::class,'plan_telgram_group','planes_id','telgram_groups_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -15,5 +15,6 @@ class Payment extends Model
         'plan_id',
         'image_payment',
         'status',
+        'transaction_id',
     ];
 }
