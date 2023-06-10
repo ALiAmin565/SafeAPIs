@@ -28,12 +28,12 @@ class StoreplanRequest extends FormRequest
     {
 
         return [
-            'title'=>'required |max:255',
-            'name'=>'required |max:255',
+            'title'=>'required',
+            'name'=>'required',
             'desc'=>'required',
             'discount'=>'required|in:0,1',
-            'price'=>'required|integer |max:255',
-            'percentage'=>'required|max:255',
+            'price'=>'required|integer',
+            'percentage'=>'required',
 
 
 

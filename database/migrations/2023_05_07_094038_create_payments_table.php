@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('plan_id')->unsigned();
             $table->string('image_payment')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->string('status');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('plan_id')->references('id')->on('planes');
