@@ -14,7 +14,7 @@ class ImgPayResource extends JsonResource
      */
     public function toArray($request)
     {
-        // dd(44);
+
         return [
             'transaction_id'=>$this->transaction_id,
             'image_payment'=>$this->image_payment

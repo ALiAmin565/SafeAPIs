@@ -78,6 +78,7 @@ Route::apiResource('post', PostController::class);
 // for pending
 
 Route::get('pending',[PayController::class,'pending']);
+Route::post('ActivePending',[PayController::class,'ActivePending']);
 
 
 

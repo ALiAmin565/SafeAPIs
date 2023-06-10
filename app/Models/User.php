@@ -35,6 +35,8 @@ class User extends Authenticatable implements JWTSubject
         'comming_afflite',
         'number_of_user',
         'Status_Plan',
+        'start_plan',
+          'end_plan'
 
 
     ];
