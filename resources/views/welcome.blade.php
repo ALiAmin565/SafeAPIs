@@ -33,7 +33,7 @@ var resultDiv = document.getElementById("resultDiv");
 
 
 
-    window.Echo.channel('recommendation')
+    window.Echo.channel('recommendation'+plan_name)
     .listen('.recommendation',(e)=>{
        console.log(e);
     });
@@ -55,7 +55,7 @@ console.log(e);
 
   </script>
 
- 
+
 
 {{-- <img src="{{ asset('Recommendation/1684590261.jpg') }}" alt=""> --}}
 
