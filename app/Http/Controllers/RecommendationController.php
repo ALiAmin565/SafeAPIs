@@ -33,6 +33,9 @@ class RecommendationController extends Controller
         $targets = $request->input('targets');
 
         $test = recommendation::create($request->all());
+        // return $test->planes_id;
+        $plan=plan::find($test->planes_id);
+
 
                 if (!empty($targets)) {
 
@@ -45,11 +48,8 @@ class RecommendationController extends Controller
                 }
 
 
-        event(new recommend( response()->json([
-            'test' => $test,
-            'targets' => $targets
-        ])));
-        return 10;
+        event(new recommend($test,$plan->name));
+return 150;
         $this->telgrame($request->planes_id);
 
 

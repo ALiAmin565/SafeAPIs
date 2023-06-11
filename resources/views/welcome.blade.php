@@ -33,7 +33,7 @@ var resultDiv = document.getElementById("resultDiv");
 
 
 
-    window.Echo.channel('recommendation')
+    window.Echo.channel('recommendation'+plan_name)
     .listen('.recommendation',(e)=>{
        console.log(e);
     });
@@ -43,7 +43,7 @@ var resultDiv = document.getElementById("resultDiv");
     window.Echo.channel('ChatPlan')
     .listen('.ChatPlan',(e)=>{
 console.log(e);
-        var result = e.Massage.original.massage.massage; // Extract the desired result from the received data
+        var result = e.Massage.original.massage.massage;
         var resultText = document.createTextNode(result);
 
         var resultDiv = document.getElementById("resultDiv");
