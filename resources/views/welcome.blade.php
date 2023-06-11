@@ -43,7 +43,7 @@ var resultDiv = document.getElementById("resultDiv");
     window.Echo.channel('ChatPlan')
     .listen('.ChatPlan',(e)=>{
 console.log(e);
-        var result = e.Massage.original.massage.massage; // Extract the desired result from the received data
+        var result = e.Massage.original.massage.massage;
         var resultText = document.createTextNode(result);
 
         var resultDiv = document.getElementById("resultDiv");
@@ -55,7 +55,7 @@ console.log(e);
 
   </script>
 
-
+ 
 
 {{-- <img src="{{ asset('Recommendation/1684590261.jpg') }}" alt=""> --}}
 
