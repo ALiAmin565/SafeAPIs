@@ -96,5 +96,7 @@ Route::post('ActivePending',[PayController::class,'ActivePending']);
 Route::prefix('Front')->group(function () {
 
     Route::get('/', [FrontController::class, 'getPlan']);
+
     Route::post('SelectPlan', [FrontController::class, 'SelectPlan']);
+    Route::post('Recommindation', [FrontController::class, 'Recommindation']);
 });

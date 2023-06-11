@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Models\plan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\recommendation;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlanResource;
 
@@ -19,7 +20,6 @@ class FrontController extends Controller
     public function SelectPlan(Request $request)
     {
 
-
         $user=User::find($request->user_id)->first();
 
         $user->update([
@@ -31,5 +31,16 @@ class FrontController extends Controller
         return response()->json([
             'Massage'=>"The process has been completed and we are awaiting approval",
         ]);
+    }
+
+    public function Recommindation(Request $request)
+    {
+
+        $user=User::find($request->user_id)->first();
+        $recommendation=recommendation::where('planes_id',$user->plan_id)->get();
+        return $recommendation;
+
+        return $recommendation;
+
     }
 }
