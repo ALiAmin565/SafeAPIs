@@ -49,7 +49,9 @@ class RecommendationController extends Controller
             'test' => $test,
             'targets' => $targets
         ])));
+        return 10;
         $this->telgrame($request->planes_id);
+
 
         return response()->json([
             'test' => $test,
