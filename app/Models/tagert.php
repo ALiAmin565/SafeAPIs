@@ -12,4 +12,6 @@ class tagert extends Model
     protected $table="_recommindation_target";
 
     public $fillable=['recomondations_id','target'];
+
+    public $hidden=['created_at','updated_at'];
 }

@@ -36,17 +36,17 @@ class recommend  implements ShouldBroadcast
     public function broadcastOn()
     {
         // for channel
+        return  new Channel('recommendation');
 
-        // dd('recommendation/'.$this->plan_name);
-
-        return new Channel('recommendation/'.$this->plan_name);
+        //  dd($x);
 
     }
 
     public function broadcastAs()
     {
         // for listen this
-        return 'recommendation';
+        // dd('recommendation/'.$this->plan_name);
+         return 'recommendation';
     }
 
 

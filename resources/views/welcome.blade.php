@@ -33,7 +33,7 @@ var resultDiv = document.getElementById("resultDiv");
 
 
 
-    window.Echo.channel('recommendation'+plan_name)
+    window.Echo.channel('recommendation')
     .listen('.recommendation',(e)=>{
        console.log(e);
     });

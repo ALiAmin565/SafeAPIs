@@ -239,7 +239,12 @@ class AuthController extends Controller
             return response()->json([                'success' => false,
             'message' => 'Wrong Password'], 200);
         }
+
         $user=auth('api')->user();
+        $user->load(['plan' => function ($query) {
+            $query->orderBy('id', 'desc');
+        }])->get();
+
         $user->token=$token;
 
         return response()->json([
@@ -255,18 +260,18 @@ class AuthController extends Controller
      */
     public function me(Request $request)
     {
+
+
         $header = $request->header('Authorization');
-
-
-
-
-
         $user=auth('api')->user();
+        $user->load(['plan' => function ($query) {
+            $query->orderBy('id', 'desc');
+        }])->get();
+        $user->token=$header;
         if(!$user){
             return response()->json(['success' => false,
             'message' => 'invalid token'], 200);
         }
-        $user->token=$header;
         return response()->json([
             'success' => true,
             "user"=>$user]);
@@ -384,8 +389,8 @@ class AuthController extends Controller
     public function dymnamikeLink()
     {
 
-        
-         
+
+
         $jsonData = [
             'dynamicLinkInfo' => [
                 'domainUriPrefix' => 'https://smart123.page.link',
@@ -396,7 +401,7 @@ class AuthController extends Controller
                 'iosInfo' => [
                     'iosBundleId' => 'com.example.safe',
                 ],
-                
+
             ],
         ];
 
@@ -406,8 +411,8 @@ $response=Http::post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?
 
 $data=json_decode($response);
 return $data->shortLink;
-    
 
-     
+
+
     }
 }
