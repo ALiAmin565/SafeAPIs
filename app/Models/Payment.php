@@ -13,8 +13,21 @@ class Payment extends Model
 
         'user_id',
         'plan_id',
-        'image_payment',
+         'image_payment',
         'status',
         'transaction_id',
+        'type'
     ];
+
+    protected $hidden = [
+'updated_at',
+'created_at'
+
+    ];
+    public function plan()
+    {
+
+        return $this->belongsTo(plan::class);
+
+    }
 }

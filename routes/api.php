@@ -9,11 +9,13 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\videoController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\PayMopController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\All_UserController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\ChatAdviceController;
+use App\Http\Controllers\Front\TabsController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\RecommendationController;
 
@@ -50,7 +52,7 @@ Route::group([
 });
 
 // for videos
-
+Route::prefix('Admin')->group(function () {
 Route::resource('video', videoController::class);
 Route::resource('posts', PostController::class);
 Route::apiResource('plan', PlanController::class);
@@ -83,20 +85,29 @@ Route::post('ActivePending',[PayController::class,'ActivePending']);
 
 
 
+});
 
 //  for Front
 
 
 
+Route::get('videos',[TabsController::class,'videos']);
+Route::get('archive',[TabsController::class,'Archive']);
+Route::post('advice',[TabsController::class,'Advice']);
+Route::post('posts',[TabsController::class,'posts']);
 
 
 
 
 
-Route::prefix('Front')->group(function () {
 
-    Route::get('/', [FrontController::class, 'getPlan']);
+
+    Route::get('plans', [FrontController::class, 'getPlan']);
+    Route::post('orderpay', [FrontController::class, 'Orderpay']);
+    Route::post('historypay', [FrontController::class, 'HistroyPay']);
+    Route::post('paymentimage', [FrontController::class, 'UploadImagePayment']);
 
     Route::post('SelectPlan', [FrontController::class, 'SelectPlan']);
     Route::post('Recommindation', [FrontController::class, 'Recommindation']);
-});
+
+

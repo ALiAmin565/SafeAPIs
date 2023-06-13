@@ -16,12 +16,12 @@ class PlanResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'title'=>$this->title,
+            // 'title'=>$this->title,
             'name'=>$this->name,
             'desc'=>$this->desc,
             'discount'=>$this->discount,
             'price'=>$this->price,
-            'percentage'=>$this->percentage,
+            'percentage'=>+$this->percentage,
             'telegram_groups' => TelegremRsource::collection($this->whenLoaded('telegram')),
 
         ];

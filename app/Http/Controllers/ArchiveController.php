@@ -40,6 +40,7 @@ class ArchiveController extends Controller
             'recomondation_id'=>$request['recomondation_id'],
             "desc"=>$request->desc,
             "user_id"=>$request->user_id,
+            "title"=>$request->title
 
            ]);
            return response()->json(['message' => 'The conversion was completed successfully']);
