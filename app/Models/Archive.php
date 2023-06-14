@@ -4,28 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Archive extends Model
 {
     use HasFactory;
+    // use SoftDeletes;
     public $table='archives';
-    protected $fillable=['desc','recomondation_id','user_id'];
+
+    protected $fillable=['title','desc','recomondation_id','user_id'];
 
 
 
     protected $hidden = [
+
         'updated_at',
-
-
     ];
+
+
 
 
 
     public function recommendation()
     {
 
-        return $this->belongsTo(recommendation::class,'recomondation_id','id');
+       return $this->belongsTo(recommendation::class,'recomondation_id','id');
+
+
     }
+
+
 
     public function user()
     {

@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
+use Illuminate\Contracts\Validation\Validator;
 
 class StoretelegramRequest extends FormRequest
 {
@@ -26,9 +27,9 @@ class StoretelegramRequest extends FormRequest
     public function rules()
     {
         return [
-            'merchant'=>'required|mix:255',
-            'token'=>'required|mix:255',
-            'title'=>'required|mix:255'
+            'merchant'=>'required|max:255',
+            'token'=>'required|max:255',
+            'title'=>'required|max:255'
         ];
     }
 

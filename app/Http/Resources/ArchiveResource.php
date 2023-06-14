@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\PlanNameResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ArchiveResource extends JsonResource
@@ -17,10 +18,12 @@ class ArchiveResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'title'=>$this->title,
             'desc'=>$this->desc,
-            'telegram_groups' => UserResource::make($this->whenLoaded('user')),
-            'telegram_groups' => RecommendationResource::collection($this->whenLoaded('recommendation')),
-            // 'user'=>UserResource::collection($this->whenLoaded('user'))
+            'create_at'=>$this->created_at,
+            'recomindation'=>RecommendationResource::make(($this->whenLoaded('recommendation'))),
+            'plan2'=>PlanNameResource::make(($this->plan2)), // Remove the whenLoaded methods
+
 
         ];
     }

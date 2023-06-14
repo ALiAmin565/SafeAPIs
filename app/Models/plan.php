@@ -22,7 +22,9 @@ class plan extends Model
         'percentage',
     ];
 
-
+    protected $casts = [
+        'percentage' => 'string',
+    ];
     public function recommendation()
     {
         return $this->belongsToMany(recommendation::class);
@@ -31,5 +33,9 @@ class plan extends Model
     public function telegram()
     {
         return $this->belongsToMany(telegram::class,'plan_telgram_group','planes_id','telgram_groups_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

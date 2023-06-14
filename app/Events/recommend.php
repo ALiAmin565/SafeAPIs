@@ -15,14 +15,17 @@ class recommend  implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
+    public $plan_name;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data,$plan_name)
     {
         $this->data=$data;
+        $this->plan_name=$plan_name;
+
     }
 
     /**
@@ -33,13 +36,17 @@ class recommend  implements ShouldBroadcast
     public function broadcastOn()
     {
         // for channel
-        return new Channel('recommendation');
+        return  new Channel('recommendation');
+
+        //  dd($x);
+
     }
 
     public function broadcastAs()
     {
         // for listen this
-        return 'recommendation';
+        // dd('recommendation/'.$this->plan_name);
+         return 'recommendation';
     }
 
 

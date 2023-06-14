@@ -13,6 +13,7 @@ class recommendation extends Model
 
     protected $fillable=[
         'title',
+        'desc',
         'entry_price',
         'stop_price',
         'currency',
@@ -37,6 +38,10 @@ class recommendation extends Model
         return $this->belongsToMany(plan::class);
 
     }
+    public function plan2()
+    {
+       return $this->belongsTo(plan::class,'planes_id','id');
+    }
 
     public function archive()
     {
@@ -46,7 +51,7 @@ class recommendation extends Model
      public function target()
      {
         return $this->hasMany(tagert::class,'recomondations_id','id');
-        // return $this->hasMany(tagert::class,'target','recomondations_id');
+
      }
 
 

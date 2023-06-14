@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('archives', function (Blueprint $table) {
             $table->id();
-            $table->text('desc');
+            $table->string('title')->nullable();
+            $table->text('desc')->nullable();
             $table->bigInteger('recomondation_id')->unsigned();
             $table->foreign('recomondation_id')->references('id')->on('recomondations');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

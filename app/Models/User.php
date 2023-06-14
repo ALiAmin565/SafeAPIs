@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
+
+
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -27,11 +29,14 @@ class User extends Authenticatable implements JWTSubject
         'verified',
         'phone',
         'otp',
-        'plan',
+        'plan_id',
         'affiliate_code',
         'affiliate_link',
         'comming_afflite',
         'number_of_user',
+        'Status_Plan',
+        'start_plan',
+          'end_plan'
 
 
     ];
@@ -80,5 +85,17 @@ class User extends Authenticatable implements JWTSubject
     public function recommendation()
     {
         return $this->hasMany(recommendation::class);
+    }
+
+    public function plan()
+    {
+        return $this->hasOne(plan::class,'id','plan_id');
+    }
+
+    public function imgPay()
+    {
+        return $this->hasMany(Payment::class, 'user_id', 'id');
+
+        // return $this->hasMany(Payment::class,'user_id','id');
     }
 }

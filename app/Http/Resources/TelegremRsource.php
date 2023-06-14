@@ -16,9 +16,11 @@ class TelegremRsource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'title'=>$this->title,
             'merchant'=>$this->merchant,
             'token'=>$this->token,
-            'title'=>$this->title,
+            'plan'=>PlanNameResource::collection($this->whenLoaded('plan'))
+
         ];
     }
 }
