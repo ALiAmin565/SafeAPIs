@@ -44,8 +44,8 @@ class All_UserController extends Controller
         $userUpdated = User::find($id);
         $userUpdated->password = bcrypt($request->password);
         $userUpdated->save();
-         return response()->json([
-            'state'=>'success add',
+st->all());
+ 'state'=>'success add',
             'user'=>$user,
          ]);
 
@@ -124,7 +124,6 @@ class All_UserController extends Controller
     }
     if($request == 'super_admin')
     {
-        return 150;
         return UserResource::collection(User::where('state',$request)->get());
 
     }
