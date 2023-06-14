@@ -40,8 +40,12 @@ class All_UserController extends Controller
         // return $request;
 
         $user=User::create($request->all());
-         return response()->json([
-            'state'=>'success add',
+        $id=$user->id;
+        $userUpdated = User::find($id);
+        $userUpdated->password = bcrypt($request->password);
+        $userUpdated->save();
+st->all());
+ 'state'=>'success add',
             'user'=>$user,
          ]);
 
@@ -120,7 +124,6 @@ class All_UserController extends Controller
     }
     if($request == 'super_admin')
     {
-        return 150;
         return UserResource::collection(User::where('state',$request)->get());
 
     }
@@ -138,7 +141,6 @@ class All_UserController extends Controller
         // for get allUser
      public function get_all_subscrib($comming_afflite)
      {
-            // return 150;
         $results = User::select('id','name')->where('comming_afflite',$comming_afflite)->get();
 
         if (!$results) {
