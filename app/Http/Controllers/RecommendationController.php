@@ -19,49 +19,32 @@ class RecommendationController extends Controller
 {
     public function index()
     {
-        return RecommendationResource::collection(recommendation::with(['user','target'])->get());
-
+        return RecommendationResource::collection(recommendation::with(['user', 'target'])->get());
     }
 
 
     public function store(StorerecommendationRequest $request)
     {
-
-
         $request['active'] = 1;
         $request['archive'] = 0;
         $request['img'] = $this->convertTextToImage($request->title);
         $targets = $request->input('targets');
-
         $test = recommendation::create($request->all());
-        // return 150;
-        // return $test->planes_id;
-        $plan=plan::find($test->planes_id);
+        $plan = plan::find($test->planes_id);
+        if (!empty($targets)) {
+            foreach ($targets as $target) {
 
-
-                if (!empty($targets)) {
-
-                    foreach ($targets as $target) {
-                        $tt = tagert::create([
-                            'recomondations_id' => $test['id'],
-                            "target" => $target,
-                        ]);
-                    }
-                }
-
-
-
-        event(new recommend($test,$plan->name));
-
-        // $this->telgrame($request->planes_id);
-
-        // return 1500;
+                $tt = tagert::create([
+                    'recomondations_id' => $test['id'],
+                    "target" => $target,
+                ]);
+            }
+        }
+        event(new recommend($test, $plan->name));
         return response()->json([
             'test' => $test,
             'targets' => $targets
         ]);
-
-
     }
 
 
@@ -73,11 +56,11 @@ class RecommendationController extends Controller
         if (!$user) {
             return response()->json(['message' => 'request not found'], 404);
         }
-        return RecommendationResource::make(recommendation::with(['user','target'])->find($id));
+        return RecommendationResource::make(recommendation::with(['user', 'target'])->find($id));
     }
 
 
-    public function update($id,StorerecommendationRequest $request)
+    public function update($id, StorerecommendationRequest $request)
     {
 
         $this->show($id);
@@ -93,13 +76,12 @@ class RecommendationController extends Controller
         if (!$user) {
             return response()->json(['message' => 'Recommendation not found'], 404);
         }
-        $target=tagert::where('recomondations_id',$id)->get();
+        $target = tagert::where('recomondations_id', $id)->get();
         $target->each->delete();
         $user->delete();
 
 
         return response()->json(['message' => 'Recommendation and associated targets deleted successfully']);
-
     }
 
     function convertTextToImage($text)
@@ -190,4 +172,4 @@ class RecommendationController extends Controller
 
     //         return $archive;
     //     }
-        }
+}
