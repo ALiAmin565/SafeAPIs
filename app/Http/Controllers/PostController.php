@@ -47,6 +47,7 @@ class PostController extends Controller
             'text' => $request['text'],
             'active' => $request['active'],
             'img' => $img,
+            "plan_id"=>$request['plan_id']
         ]);
 
         return response()->json([

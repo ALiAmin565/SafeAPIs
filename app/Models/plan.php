@@ -22,7 +22,9 @@ class plan extends Model
         'percentage',
     ];
 
-
+    protected $casts = [
+        'percentage' => 'string',
+    ];
     public function recommendation()
     {
         return $this->belongsToMany(recommendation::class);

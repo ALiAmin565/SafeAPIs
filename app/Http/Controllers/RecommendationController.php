@@ -27,12 +27,17 @@ class RecommendationController extends Controller
     public function store(StorerecommendationRequest $request)
     {
 
+
         $request['active'] = 1;
         $request['archive'] = 0;
         $request['img'] = $this->convertTextToImage($request->title);
         $targets = $request->input('targets');
 
         $test = recommendation::create($request->all());
+        // return 150;
+        // return $test->planes_id;
+        $plan=plan::find($test->planes_id);
+
 
                 if (!empty($targets)) {
 
@@ -45,14 +50,12 @@ class RecommendationController extends Controller
                 }
 
 
-        event(new recommend( response()->json([
-            'test' => $test,
-            'targets' => $targets
-        ])));
-        return 10;
-        $this->telgrame($request->planes_id);
 
+        event(new recommend($test,$plan->name));
 
+        // $this->telgrame($request->planes_id);
+
+        // return 1500;
         return response()->json([
             'test' => $test,
             'targets' => $targets

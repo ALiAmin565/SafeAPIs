@@ -33,7 +33,7 @@ class StoreplanRequest extends FormRequest
             'desc'=>'required',
             'discount'=>'required|in:0,1',
             'price'=>'required|integer',
-            'percentage'=>'required',
+            'percentage'=>'required|integer',
 
 
 

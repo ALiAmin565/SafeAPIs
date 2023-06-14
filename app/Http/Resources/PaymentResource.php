@@ -16,10 +16,11 @@ class PaymentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'plan_id' => $this->plan_id,
+            // 'user_id' => $this->user_id,
+            // 'plan_id' => $this->plan_id,
             'image_payment' => $this->image_payment,
             'status' => $this->status,
+            'plan'=>PlanNameResource::make($this->whenLoaded('plan'))
         ];
     }
 }

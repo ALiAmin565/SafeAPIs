@@ -11,7 +11,7 @@ use App\Http\Requests\updatedUserRequest;
  use Illuminate\Database\Eloquent\SoftDeletes;
  use Illuminate\Database\Eloquent\Model;
  use Illuminate\Support\Facades\Validator;
-
+use PhpParser\Node\Stmt\Return_;
 
 class All_UserController extends Controller
 {
@@ -137,6 +137,7 @@ class All_UserController extends Controller
         // for get allUser
      public function get_all_subscrib($comming_afflite)
      {
+            // return 150;
         $results = User::select('id','name')->where('comming_afflite',$comming_afflite)->get();
 
         if (!$results) {
