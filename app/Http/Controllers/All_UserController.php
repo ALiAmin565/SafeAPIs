@@ -124,6 +124,7 @@ class All_UserController extends Controller
     }
     if($request == 'super_admin')
     {
+        return 150;
         return UserResource::collection(User::where('state',$request)->get());
 
     }
