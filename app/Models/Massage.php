@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Massage extends Model
 {
     use HasFactory;
-    public $fillable=['user_id','plan_id','massage','img'];
+    public $fillable=['user_id','plan_id','massage'];
 
 
     public function user()
     {
-        return $this->hasOne(User::class,'user_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function media()
+    {
+        return $this->hasOne(Massage_media::class);
+
     }
 }

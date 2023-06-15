@@ -19,7 +19,6 @@ class FrontController extends Controller
         return PlanResource::collection(plan::get());
     }
 
-
     public function Orderpay(Request $request)
     {
 
@@ -43,8 +42,6 @@ class FrontController extends Controller
         return PaymentResource::collection($Payment);
 
     }
-
-
 
     public function SelectPlan(Request $request)
     {
@@ -110,7 +107,7 @@ class FrontController extends Controller
     }
 
 
-    
+
 
 
 

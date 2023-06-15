@@ -14,7 +14,7 @@ class ArchiveController extends Controller
     public function index()
     {
 
-        return   ArchiveResource::collection(Archive::with('user')->get());
+        return   ArchiveResource::collection(Archive::orderBy('created_at', 'desc')->with(['user','recommendation'])->get());
     }
 
 

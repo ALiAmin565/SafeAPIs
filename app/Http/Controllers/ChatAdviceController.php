@@ -32,6 +32,7 @@ class ChatAdviceController extends Controller
 
 
 
+
          $user=Massage::create([
             'user_id'=>$request['user_id'],
             'plan_id'=>$request['plan_id'],

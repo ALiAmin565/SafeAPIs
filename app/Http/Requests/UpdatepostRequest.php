@@ -28,10 +28,8 @@ class UpdatepostRequest extends FormRequest
 
         return [
 
-            'title' => 'required|max:255',
-            'active' => 'required|Boolean',
-            'img' => 'required|mimes:jpg,bmp,png,jpeg',
-            'text' => 'required|max:255',
+            'title' => 'max:255',
+            'text' => 'max:255',
         ];
     }
 

@@ -38,14 +38,17 @@ class PostController extends Controller
      */
     public function store(StorepostRequest $request)
     {
+        $img=null;
         if ($request->hasFile('img')) {
             $img = time() . '.' . $request->img->extension();
             $path = $request->img->move(public_path('posts'), $img);
         }
+
         posts::create([
             'title' => $request['title'],
             'text' => $request['text'],
             'active' => $request['active'],
+            'status'=>$request['status'],
             'img' => $img,
             "plan_id"=>$request['plan_id']
         ]);
@@ -87,6 +90,7 @@ class PostController extends Controller
     public function update(UpdatepostRequest $request, $id)
     {
 
+        // return $request->all();
         $post = posts::find($id);
 
         if (!$post) {
@@ -107,7 +111,7 @@ class PostController extends Controller
         $post->update([
             'title' => $request['title'],
             'text' => $request['text'],
-            'active' => $request['active'],
+            'status' => $request['status'],
             'img' => $img,
         ]);
 

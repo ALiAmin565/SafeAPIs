@@ -19,21 +19,16 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('recommendation', function () {
 
+Broadcast::channel('chat', function () {
     return true;
 });
 
-// Broadcast::channel('recommendation/VIP', function () {
-//     return true;
-// });
 
-
-// Broadcast::channel('recommendation/{plan_name}', function (User $user, $plan_name) {
-//    dd(150);
-//     return $user->plan_name == $plan_name;
-// });
-
-Broadcast::channel('ChatPlan', function () {
+Broadcast::channel('recommendation.{plan_name}', function ($user, $plan_name) {
+    // You can add custom logic here to authorize the user to listen to the channel
     return true;
 });
+
+
+

@@ -19,7 +19,7 @@ class RecommendationController extends Controller
 {
     public function index()
     {
-        return RecommendationResource::collection(recommendation::with(['user','target'])->get());
+        return RecommendationResource::collection(recommendation::orderBy('created_at', 'desc')->where('archive',0)->with(['user','target'])->get());
 
     }
 
@@ -30,32 +30,30 @@ class RecommendationController extends Controller
 
         $request['active'] = 1;
         $request['archive'] = 0;
-        $request['img'] = $this->convertTextToImage($request->title);
+        $request['img'] = $this->convertTextToImage($request->desc);
         $targets = $request->input('targets');
 
-        $test = recommendation::create($request->all());
-        // return 150;
-        // return $test->planes_id;
-        $plan=plan::find($test->planes_id);
+            $test = recommendation::create($request->all());
+
+            $plan=plan::find($test->planes_id);
 
 
-                if (!empty($targets)) {
+                    if (!empty($targets)) {
 
-                    foreach ($targets as $target) {
-                        $tt = tagert::create([
-                            'recomondations_id' => $test['id'],
-                            "target" => $target,
-                        ]);
+                        foreach ($targets as $target) {
+                            $tt = tagert::create([
+                                'recomondations_id' => $test['id'],
+                                "target" => $target,
+                            ]);
+                        }
                     }
-                }
 
 
+        event(new recommend($test,$targets,$plan->name));
 
-        event(new recommend($test,$plan->name));
+        $this->telgrame($request->planes_id);
 
-        // $this->telgrame($request->planes_id);
 
-        // return 1500;
         return response()->json([
             'test' => $test,
             'targets' => $targets
@@ -79,7 +77,7 @@ class RecommendationController extends Controller
 
     public function update($id,StorerecommendationRequest $request)
     {
-
+//    return 150;
         $this->show($id);
         $this->destroy($id);
         return $this->store($request);
@@ -89,12 +87,15 @@ class RecommendationController extends Controller
     public function destroy($id)
     {
 
-        $user = recommendation::find($id);
+         $user = recommendation::find($id);
         if (!$user) {
             return response()->json(['message' => 'Recommendation not found'], 404);
         }
         $target=tagert::where('recomondations_id',$id)->get();
         $target->each->delete();
+        // for delete image if use delete not sofdelete
+        // $this->deletePreviousImage($user->img,'Recommendation');
+
         $user->delete();
 
 
@@ -105,14 +106,14 @@ class RecommendationController extends Controller
     function convertTextToImage($text)
     {
         // Create a new image instance using Intervention Image
-        $image = Image::canvas(100, 200);
+        $image = Image::canvas(1000, 2000);
 
         // Set the font properties
         // $font = $fontPath; // Path to your desired font file
-        $color = '#000'; // Text color in hexadecimal format
-        $x = 0; // X-coordinate for the starting position of the text
-        $y = 1; // Y-coordinate for the starting position of the text
-        $fontSize = 250;
+        $color = '#FF0000'; // Text color in hexadecimal format
+        $x = 50; // X-coordinate for the starting position of the text (centered horizontally)
+        $y = 150; // Y-coordinate for the starting position of the text
+        $fontSize = 200;
         $image_Name = time() . '.' . 'jpg';
         $imagePath = public_path('Recommendation/' . $image_Name);
 
@@ -121,8 +122,8 @@ class RecommendationController extends Controller
             // $font->file($fontPath);
             $font->size($fontSize);
             $font->color($color);
-            $font->align('left');
-            $font->valign('top');
+            $font->align('center');
+            $font->valign('middle');
         });
 
         // Save the image
@@ -168,26 +169,8 @@ class RecommendationController extends Controller
 
     }
 
-    // public function archive($id,Request $request)
-    // {
-    //      $rec=recommendation::find($id);
-    //      if (!$rec) {
-    //         return response()->json(['message' => 'request not found'], 404);
-    //     }
-    //      $rec->update([
-    //         'archive'=>1,
-    //      ]);
-
-    //     //  return response()->json(['message' => 'The archive has been converted successfully'], 404);
 
 
-    //      $archive=Archive::create([
-    //          'recomondation_id'=>$id,
-    //          "desc"=>$request->desc,
-    //          "user_id"=>$request->user_id,
 
-    //         ]);
 
-    //         return $archive;
-    //     }
         }

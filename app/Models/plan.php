@@ -20,6 +20,7 @@ class plan extends Model
         'discount',
         'price',
         'percentage',
+        'created_at'
     ];
 
     protected $casts = [

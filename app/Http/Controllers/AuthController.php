@@ -116,7 +116,8 @@ class AuthController extends Controller
     }
     // cheackopt
         public function checkOtp(Request $request) {
-        $email = $request->input('email');
+      try{
+            $email = $request->input('email');
         $otp = $request->input('otp');
 
         $user = User::where('email', $email)->first();
@@ -127,9 +128,14 @@ class AuthController extends Controller
             if($request['action']!="reset"){
             $user->otp=null;
             $user->verified=true;
-            $user->affiliate_code=  $this->generate_affiliate_code();
+
+
+            $code = $this->generate_affiliate_code();
+            $user->affiliate_code = $code;
             $user->email_verified_at=time();
-            $user->affiliate_link=$this->dymnamikeLink();
+            // return $code;
+
+            $user->affiliate_link=$this->dymnamikeLink($code);
 
             $user->save();
             $user2=User::where('affiliate_code', $user->comming_afflite)->first();
@@ -154,6 +160,9 @@ class AuthController extends Controller
         }
 
         return response()->json($response);
+      }catch (\Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
     public function resetPassword(Request $request) {
         $email = $request->input('email');
@@ -207,7 +216,7 @@ class AuthController extends Controller
 
         return $code;
     }
-    public function login(Request $data)
+   public function login(Request $data)
     {
         $validator =Validator::make($data->all(),
             [
@@ -258,7 +267,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me(Request $request)
+      public function me(Request $request)
     {
 
 
@@ -276,7 +285,6 @@ class AuthController extends Controller
             'success' => true,
             "user"=>$user]);
     }
-
     /**
      * Log the user out (Invalidate the token).
      *
@@ -310,30 +318,59 @@ class AuthController extends Controller
         }
 
     }
-    public function reSendOtp(Request $data){
+   public function reSendOtp(Request $data){
         // generate otp from 6 digits
-        $email=$data['email'];
+
         // send it to database
         try{
+            $validator =Validator::make($data->all(),
+            [
+                'email'=>'required|email:rfc,dns|exists:users,email',
+            ]);
+
+        if ($validator -> fails()) {
+            // return json of errors object
+            $response = [
+                'success' => false,
+                "errors"=>$validator->errors()            ];
+            return response()->json( $response,200);
+
+
+
+        }
+            $email = $data['email'];
             $user = User::where('email', $email)->firstOrFail();
 
             // Then, retrieve the OTP from the user's record
             if(!$user){
 
+
             return response()->json(['success' => false, 'message' => "Email not found"]);
 
             }
             $otp = $user->otp;
+            if(!$otp){
+                return $this->sendOtp($data);
+            }
+
+
             // send Mail Otp
             $otpDataaa = [
 
                 'otp' => $otp,
-                'subject'=>"Verify Email"
+                'subject'=>$data['subject']??'Verify Email'
 
 
             ];
+            if($data['subject']=="Verify Email"){
+                Mail::to($data['email'])->send( new OtpMail($otpDataaa));
 
-            Mail::to($data['email'])->send( new OtpMail($otpDataaa));
+            }else{
+                Mail::to($data['email'])->send( new ResetPasswordOtp($otpDataaa));
+
+
+            }
+
 
 
 
@@ -386,28 +423,31 @@ class AuthController extends Controller
     }
 
 
-    public function dymnamikeLink()
+    public function dymnamikeLink($code)
     {
 
-
+        // $code=$data0['code'];
 
         $jsonData = [
             'dynamicLinkInfo' => [
-                'domainUriPrefix' => 'https://smart123.page.link',
-                'link' => 'https://smartsolution-ar.com/?code=futfu',
+                'domainUriPrefix' => 'https://cryptocil.page.link',
+                'link' => 'https://smartsolution-ar.com/?code='.$code,
                 'androidInfo' => [
-                    'androidPackageName' => 'com.example.safe',
+                    'androidPackageName' => 'com.upvela.upvela',
                 ],
                 'iosInfo' => [
-                    'iosBundleId' => 'com.example.safe',
+                    'iosBundleId' => 'com.upvela.upvela',
                 ],
 
             ],
         ];
 
 
-$response=Http::post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCn_tqOc5ZxBvlOmBCXuVnp-yZ2sUD3qH8'
-,$jsonData);
+
+
+$response=Http::post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyAa9-l9PJ2zONYEsqsN84c7JD_9Aue8_pc',$jsonData);
+
+// return 'ok';
 
 $data=json_decode($response);
 return $data->shortLink;
@@ -416,3 +456,4 @@ return $data->shortLink;
 
     }
 }
+

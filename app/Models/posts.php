@@ -14,10 +14,11 @@ class posts extends Model
 
     protected $fillable=[
         'title',
-        'active',
+
         'img',
         'text',
         'plan_id',
-        'status'
+        'status',
+        'created_at'
     ];
 }

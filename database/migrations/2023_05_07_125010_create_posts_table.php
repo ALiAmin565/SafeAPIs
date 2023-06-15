@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->boolean('active')->default('1');
-            $table->string('img')->nullable();
+             $table->string('img')->nullable();
             $table->text('text')->nullable();
             $table->string('status')->nullable();
             $table->bigInteger('plan_id')->unsigned()->nullable();
-            $table->foreign('plan_id')->references('id')->on('planes');
+            $table->foreign('plan_id')->references('id')->on('planes')->nullable();
             $table->timestamps();
         });
     }

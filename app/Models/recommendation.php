@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class recommendation extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public $table='recomondations';
 
@@ -23,6 +25,7 @@ class recommendation extends Model
         'number_show',
         'user_id',
         'planes_id',
+        'created_at'
 
     ];
 

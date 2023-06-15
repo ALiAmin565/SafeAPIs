@@ -12,7 +12,7 @@ class Archive extends Model
     // use SoftDeletes;
     public $table='archives';
 
-    protected $fillable=['title','desc','recomondation_id','user_id'];
+    protected $fillable=['title','desc','recomondation_id','user_id','created_at'];
 
 
 

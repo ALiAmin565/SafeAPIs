@@ -18,6 +18,7 @@ use App\Http\Controllers\ChatAdviceController;
 use App\Http\Controllers\Front\TabsController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\Front\ChatGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +54,10 @@ Route::group([
 
 // for videos
 Route::prefix('Admin')->group(function () {
+
+
 Route::resource('video', videoController::class);
+
 Route::resource('posts', PostController::class);
 Route::apiResource('plan', PlanController::class);
 
@@ -95,6 +99,8 @@ Route::get('videos',[TabsController::class,'videos']);
 Route::get('archive',[TabsController::class,'Archive']);
 Route::post('advice',[TabsController::class,'Advice']);
 Route::post('posts',[TabsController::class,'posts']);
+Route::post('massage',[ChatGroupController::class,'Massage']);
+Route::post('sendmassage',[ChatGroupController::class,'StoreMassage']);
 
 
 

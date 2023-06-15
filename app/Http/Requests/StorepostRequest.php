@@ -27,11 +27,10 @@ class StorepostRequest extends FormRequest
     {
 
         return [
-            'title' => 'required|max:255',
-            'active' => 'required|Boolean',
-            'img' => 'required|mimes:jpg,bmp,png,jpeg',
+            'title' => 'max:255',
             'text' => 'required|max:255',
-            'plan_id'=>'required|exists:planes,id'
+            // 'plan_id'=>'required|exists:planes,id'
+            'status'=>'required'
         ];
     }
 
