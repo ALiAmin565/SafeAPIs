@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'phone'=>$this->phone,
             'plan'=>$this->plan,
             'number_of_user'=>$this->number_of_user,
+            'comming_afflite'=>$this->comming_afflite,
 
         ];
     }

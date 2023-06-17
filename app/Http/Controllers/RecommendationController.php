@@ -19,19 +19,22 @@ class RecommendationController extends Controller
 {
     public function index()
     {
+// <<<<<<< AhmedSamir
         return RecommendationResource::collection(recommendation::orderBy('created_at', 'desc')->where('archive',0)->with(['user','target'])->get());
 
+// =======
+//         return RecommendationResource::collection(recommendation::with(['user', 'target'])->get());
+// >>>>>>> main
     }
 
 
     public function store(StorerecommendationRequest $request)
     {
-
-
         $request['active'] = 1;
         $request['archive'] = 0;
         $request['img'] = $this->convertTextToImage($request->desc);
         $targets = $request->input('targets');
+// <<<<<<< AhmedSamir
 
             $test = recommendation::create($request->all());
 
@@ -54,12 +57,24 @@ class RecommendationController extends Controller
         $this->telgrame($request->planes_id);
 
 
+// =======
+//         $test = recommendation::create($request->all());
+//         $plan = plan::find($test->planes_id);
+//         if (!empty($targets)) {
+//             foreach ($targets as $target) {
+
+//                 $tt = tagert::create([
+//                     'recomondations_id' => $test['id'],
+//                     "target" => $target,
+//                 ]);
+//             }
+//         }
+//         event(new recommend($test, $plan->name));
+// >>>>>>> main
         return response()->json([
             'test' => $test,
             'targets' => $targets
         ]);
-
-
     }
 
 
@@ -71,11 +86,11 @@ class RecommendationController extends Controller
         if (!$user) {
             return response()->json(['message' => 'request not found'], 404);
         }
-        return RecommendationResource::make(recommendation::with(['user','target'])->find($id));
+        return RecommendationResource::make(recommendation::with(['user', 'target'])->find($id));
     }
 
 
-    public function update($id,StorerecommendationRequest $request)
+    public function update($id, StorerecommendationRequest $request)
     {
 //    return 150;
         $this->show($id);
@@ -91,7 +106,7 @@ class RecommendationController extends Controller
         if (!$user) {
             return response()->json(['message' => 'Recommendation not found'], 404);
         }
-        $target=tagert::where('recomondations_id',$id)->get();
+        $target = tagert::where('recomondations_id', $id)->get();
         $target->each->delete();
         // for delete image if use delete not sofdelete
         // $this->deletePreviousImage($user->img,'Recommendation');
@@ -100,7 +115,6 @@ class RecommendationController extends Controller
 
 
         return response()->json(['message' => 'Recommendation and associated targets deleted successfully']);
-
     }
 
     function convertTextToImage($text)
@@ -173,4 +187,10 @@ class RecommendationController extends Controller
 
 
 
+// <<<<<<< AhmedSamir
         }
+// =======
+//     //         return $archive;
+//     //     }
+// }
+// >>>>>>> main
